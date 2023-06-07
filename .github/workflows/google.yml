@@ -64,14 +64,6 @@ jobs:
         cluster_name: springdemo
         location: us-central1-c
 
-    # Build the Docker image
-    - name: Build
-      run: |-
-        docker build \
-          --tag "us-central1-docker.pkg.dev-docker.pkg.dev/dark-sensor-386805/samples/static-site1:$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" \
-          .
     - name: Set outputs
       id: vars
       run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_SHA
@@ -83,14 +75,14 @@ jobs:
           gcloud container clusters get-credentials springdemo --region us-central1-c 
     - name: Build Docker image
       run: |
-          docker build -t static-site:latest .
+          docker build -t static-site1:latest .
     - name: Authenticate with Google Container Registry
       run: |
           gcloud auth configure-docker
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
-        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:$GITHUB_SHA"
+        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:latest"
     # Set up kustomize
     - name: Set up Kustomize
       run: |-
