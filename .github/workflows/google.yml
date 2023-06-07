@@ -72,6 +72,21 @@ jobs:
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
+    - name: Set outputs
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_SHA
+    - name: Check outputs
+      run: echo ${{ steps.vars.outputs.sha_short }}
+    # Push the Docker image to Google Artifact Registry
+    - name: Configure kubectl
+      run: |
+          gcloud container clusters get-credentials springdemo --region us-central1-c 
+    - name: Build Docker image
+      run: |
+          docker build -t static-site:latest .
+    - name: Authenticate with Google Container Registry
+      run: |
+          gcloud auth configure-docker
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
