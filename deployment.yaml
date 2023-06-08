@@ -1,22 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: currency-deployment
   labels:
-    app: nginx
+    app: currency
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nginx
+      app: currency
   template:
     metadata:
       labels:
-        app: nginx
+        app: currency
     spec:
-      serviceAccountName: my-service-account
       containers:
-      - name: nginx
-        image: nginx:1.14.2
+      - name: static-site1
+        image: us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:1.0
         ports:
-        - containerPort: 80
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: 200m
