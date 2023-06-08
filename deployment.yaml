@@ -22,33 +22,24 @@ spec:
         app: currency-conversion
     spec:
       containers:
-      - image:us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1
-        imagePullPolicy: IfNotPresent
-        name: currency-conversion
-        # env:
-        #   - name: CURRENCY_EXCHANGE_SERVICE_HOST
-        #     value: http://currency-exchange
-        
-        #     valueFrom: 
-        #       configMapKeyRef:
-        #         key: CURRENCY_EXCHANGE_SERVICE_HOST
-        #         name: currency-conversion-config-map
+      -image: us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1
+      name: samples
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels: #PODS
+  labels:currency-conversion
     app: currency-conversion
   name: currency-conversion
   namespace: springdemo
 spec:
   ports:
-  - port: 8100 #CHANGE
+  - port: 8100 
     protocol: TCP
-    targetPort: 8100 #CHANGE
+    targetPort: 8100 
   selector:
     app: currency-conversion
-  sessionAffinity: None #CHANGE
+  sessionAffinity: None 
   type: LoadBalancer
