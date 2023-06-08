@@ -1,39 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: nginx-deployment
   labels:
-    app: currency-conversion
-  name: currency-conversion
-  namespace: springdemo
+    app: nginx
 spec:
-  replicas: 2 #CHANGE
-  minReadySeconds: 45
+  replicas: 3
   selector:
     matchLabels:
-      app: currency-conversion
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+      app: nginx
   template:
     metadata:
       labels:
-        app: currency-conversion
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:currency-conversion
-    app: currency-conversion
-  name: currency-conversion
-  namespace: springdemo
-spec:
-  ports:
-  - port: 8100 
-    protocol: TCP
-    targetPort: 8100 
-  selector:
-    app: currency-conversion
-  sessionAffinity: None 
-  type: LoadBalancer
+        app: nginx
+    spec:
+      serviceAccountName: my-service-account
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
