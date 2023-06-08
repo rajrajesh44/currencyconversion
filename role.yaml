@@ -4,7 +4,15 @@ metadata:
   name: container-deploy-role
   namespace: springdemo
 rules:
-- apiGroups: [""]
-  resources: ["pods", "pods/exec", "pods/log"]
-  verbs: ["create", "get", "list", "watch", "delete"]
-
+- apiGroups:
+  - "" # core API group
+  resources:
+  - pods
+  - pods/exec
+  - pods/log
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
