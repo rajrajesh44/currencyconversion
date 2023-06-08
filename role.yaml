@@ -1,23 +1,64 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: deployment-creator
-rules:
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["create"]
-
+cat <<EOF | kubectl apply -f -
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRole
 metadata:
-  name: deployment-creator-binding
+  name: api-cluster-role
+  namespace: springdemo
+rules:
+  - apiGroups:
+        - ""
+        - apps
+        - autoscaling
+        - batch
+        - extensions
+        - policy
+        - rbac.authorization.k8s.io
+    resources:
+      - pods
+      - componentstatuses
+      - configmaps
+      - daemonsets
+      - deployments
+      - events
+      - endpoints
+      - horizontalpodautoscalers
+      - ingress
+      - jobs
+      - limitranges
+      - namespaces
+      - nodes
+      - pods
+      - persistentvolumes
+      - persistentvolumeclaims
+      - resourcequotas
+      - replicasets
+      - replicationcontrollers
+      - serviceaccounts
+      - services
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+EOF
+
+cat <<EOF | kubectl apply -f -
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: api-cluster-role-binding
 subjects:
-  - kind: User
-    name: my-service-account@dark-sensor-386805.iam.gserviceaccount.com         # Replace with the actual username or service account name
-    apiGroup: rbac.authorization.k8s.io
+- namespace: springdemo 
+  kind: ServiceAccount
+  name: my-service-account
 roleRef:
-  kind: Role
-  name: deployment-creator
   apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: api-cluster-role 
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: springdemo
+EOF
