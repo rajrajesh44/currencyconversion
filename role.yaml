@@ -1,23 +1,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: deployment-creator
+  name: modify-namespace
 rules:
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["create"]
-
----
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: deployment-creator-binding
-subjects:
-  - kind: User
-    name: rajrajesh44@gmail.com         # Replace with the actual username or service account name
-    apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: Role
-  name: deployment-creator
-  apiGroup: rbac.authorization.k8s.io
+  - apiGroups: ""
+    resources:
+      - namespaces
+    verbs:
+      - create
