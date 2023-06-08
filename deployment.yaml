@@ -20,12 +20,6 @@ spec:
     metadata:
       labels:
         app: currency-conversion
-    spec:
-      containers:
-      -image: us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1
-      name: samples
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
 ---
 apiVersion: v1
 kind: Service
