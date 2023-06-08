@@ -86,7 +86,8 @@ jobs:
       run: |-
         # replacing the image name in the k8s template
          set image node:8.15.0 mysql=mariadb alpine@sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d
-         kubectl create deployment currency-o --validate='false' --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1 --namespace=springdemo
+         kubectl apply -f -
+         #kubectl create deployment currency-o --validate='false' --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1 --namespace=springdemo
          #kubectl apply -f deployment.yaml -n springdemo
          #kubectl create deployment currency-conversion --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1 --namespace=springdemo
         
