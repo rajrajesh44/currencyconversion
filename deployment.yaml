@@ -22,7 +22,7 @@ spec:
         app: currency-conversion
     spec:
       containers:
-      - image:us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1 #CHANGE
+      - image:us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1
         imagePullPolicy: IfNotPresent
         name: currency-conversion
         # env:
