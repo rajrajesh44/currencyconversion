@@ -86,7 +86,7 @@ jobs:
       run: |-
         # replacing the image name in the k8s template
          ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/us-central1/samples/static-site1:$GITHUB_SHA
-         ./kustomize build . | kubectl apply -f role.yaml -f rolebinding.yaml 
+         ./kustomize build . | kubectl apply -f
          kubectl rollout status deployment/ currency-conversion
           kubectl get services -o wide
         #set image node:8.15.0 mysql=mariadb alpine@sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d
