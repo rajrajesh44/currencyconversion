@@ -88,7 +88,6 @@ jobs:
         ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/us-central1/samples/static-site1:$GITHUB_SHA
          kubectl create deployment currency-conversion  --image=us-central1-docker.pkg.dev/us-central1/samples/static-site1:$GITHUB_SHA 
          kubectl expose deployment currency-conversion   --type=LoadBalancer --port=8002
-         kubectl rollout status deployment/ currency-conversion
          kubectl get services -o wide
         
    
