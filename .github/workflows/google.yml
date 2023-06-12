@@ -85,7 +85,7 @@ jobs:
     - name: Deploy
       run: |-
         # replacing the image name in the k8s template
-        
+         ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/us-central1/samples/static-site1:$GITHUB_SHA
          ./kustomize build . | kubectl apply -f role.yaml -f rolebinding.yaml  --namespace=springdemo
          kubectl rollout status deployment/ currency-conversion
           kubectl get services -o wide
